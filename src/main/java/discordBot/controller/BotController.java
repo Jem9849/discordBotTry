@@ -55,7 +55,7 @@ public class BotController extends ListenerAdapter
 		MessageChannel mailPather = event.getChannel();
 		User member = event.getAuthor();
 		
-		String Smsg = msg.getContentDisplay();
+		String Smsg = msg.getContentRaw();
 		
 		if (Smsg.equals("Hello"))
 		{
