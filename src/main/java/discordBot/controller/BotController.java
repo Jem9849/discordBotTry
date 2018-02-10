@@ -1,7 +1,5 @@
 package discordBot.controller;
 
-
-
 /**
  * These are the importations for the JDA and also one for authorizathion.
  */
@@ -25,13 +23,14 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 public class BotController extends ListenerAdapter 
 {
 	JDA tryBot; // A JDA called tryBot.
+	String token = FileReader.readConfig();
 	
 	public BotController() throws LoginException, InterruptedException 
 	{
 		try 
 		{
 		JDABuilder build = new JDABuilder(AccountType.BOT);
-		build.setToken("NDA0MDM0NjYzNzkxODUzNTY4.DV-OPg.1jMa0nLA_QOusa1m392jdE0uuvs");
+		build.setToken(token);
 		
 		tryBot = build.buildBlocking();
 		tryBot.addEventListener(new BotController());

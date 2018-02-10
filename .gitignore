@@ -2,7 +2,7 @@ bin/
 *.class 
 .DS_Store
 Thumbs.db
-config/Config
+Config.txt
 
 # BlueJ files
 *.ctxt
