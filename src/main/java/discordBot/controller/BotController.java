@@ -6,14 +6,15 @@ package discordBot.controller;
  * These are the importations for the JDA and also one for authorizathion.
  */
 import javax.security.auth.login.LoginException;
+import net.dv8tion.jda.client.entities.Group;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
-import net.dv8tion.jda.core.entities.ChannelType;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.Permission;
+import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.exceptions.PermissionException;
+import net.dv8tion.jda.core.exceptions.RateLimitedException;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 /**
@@ -27,22 +28,62 @@ public class BotController extends ListenerAdapter
 	
 	public BotController() throws LoginException, InterruptedException 
 	{
-		tryBot = new JDABuilder(AccountType.BOT).setToken("NDA0MDM0NjYzNzkxODUzNTY4.DV-OPg.1jMa0nLA_QOusa1m392jdE0uuvs").buildBlocking();
-		// Adding tryBot has a JDABuilder.
+		try 
+		{
+		JDABuilder build = new JDABuilder(AccountType.BOT);
+		build.setToken("NDA0MDM0NjYzNzkxODUzNTY4.DV-OPg.1jMa0nLA_QOusa1m392jdE0uuvs");
 		
-		tryBot.addEventListener(new BotController()); // Adds an EventListener.
+		tryBot = build.buildBlocking();
+		tryBot.addEventListener(new BotController());
+		}
+		
+		catch (LoginException event)
+		{
+			event.printStackTrace();
+		}
+		
+		catch (InterruptedException event)
+		{
+			event.printStackTrace();
+		}
 	}
 	
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event)
 	{
-		Message mail = event.getMessage();
+		JDA jda = event.getJDA();
+		long responseNumber = event.getResponseNumber();
+		
+		Message msg = event.getMessage();
 		MessageChannel mailPather = event.getChannel();
 		User member = event.getAuthor();
 		
-		if (mail.getContentRaw().equalsIgnoreCase("Hello"))
+		String Smsg = msg.getContentDisplay();
+		
+		if (Smsg.equals("Hello"))
 		{
 			mailPather.sendMessage("Hello there, I am Merciz. How may I help you, " + member.getAsMention() + "." ).queue();
+		}
+		
+		if (event.isFromType(ChannelType.TEXT))
+		{
+			Guild server = event.getGuild();
+			TextChannel textPath = event.getTextChannel();
+			Member user = event.getMember();
+			
+			String name;
+			
+			if (msg.isWebhookMessage())
+			{
+				name = member.getName();
+			}
+			
+			else
+			{
+				name = user.getEffectiveName();
+			}
+			
+			 System.out.printf("(%s)[%s]<%s>: %s\n", server.getName(), textPath.getName(), name, Smsg);
 		}
 	}
 	
