@@ -22,8 +22,9 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
  */
 public class BotController extends ListenerAdapter 
 {
+	FileReader file = new FileReader();
 	JDA tryBot; // A JDA called tryBot.
-	String token = FileReader.readConfig();
+	String token = file.readConfig();
 	
 	public BotController() throws LoginException, InterruptedException 
 	{

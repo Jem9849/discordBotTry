@@ -14,7 +14,7 @@ public class FileReader
 			while (scanFile.hasNextLine());
 			{
 				String row = scanFile.nextLine();
-				container = row;
+				container += row + "\n";
 			}
 			scanFile.close();
 		}
