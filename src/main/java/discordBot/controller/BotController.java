@@ -50,8 +50,6 @@ public class BotController extends ListenerAdapter
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event)
 	{
-		JDA jda = event.getJDA();
-		long responseNumber = event.getResponseNumber();
 		
 		Message msg = event.getMessage();
 		MessageChannel mailPather = event.getChannel();
@@ -62,27 +60,6 @@ public class BotController extends ListenerAdapter
 		if (Smsg.equals("Hello"))
 		{
 			mailPather.sendMessage("Hello there, I am Merciz. How may I help you, " + member.getAsMention() + "." ).queue();
-		}
-		
-		if (event.isFromType(ChannelType.TEXT))
-		{
-			Guild server = event.getGuild();
-			TextChannel textPath = event.getTextChannel();
-			Member user = event.getMember();
-			
-			String name;
-			
-			if (msg.isWebhookMessage())
-			{
-				name = member.getName();
-			}
-			
-			else
-			{
-				name = user.getEffectiveName();
-			}
-			
-			 System.out.printf("(%s)[%s]<%s>: %s\n", server.getName(), textPath.getName(), name, Smsg);
 		}
 	}
 	
