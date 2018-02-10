@@ -11,12 +11,9 @@ public class FileReader
 		try
 		{
 			Scanner scanFile = new Scanner(new File(file));
-			while (scanFile.hasNextLine());
-			{
-				String row = scanFile.nextLine();
-				container += row + "\n";
-			}
-			scanFile.close();
+				String row = scanFile.next();
+				container = row;
+				scanFile.close();
 		}
 		
 		catch (FileNotFoundException error)
